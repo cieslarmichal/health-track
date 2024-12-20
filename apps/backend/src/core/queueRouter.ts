@@ -3,9 +3,9 @@ import { setInterval } from 'timers/promises';
 import { coreSymbols } from './symbols.js';
 import { type DependencyInjectionContainer } from '../libs/dependencyInjection/dependencyInjectionContainer.js';
 import { type LoggerService } from '../libs/logger/loggerService.js';
-import { type QueueChannel } from '../libs/queue/queueChannel.js';
-import { type QueueController } from '../libs/queue/queueController.js';
-import { type QueueHandler, type QueueHandlerPayload } from '../libs/queue/queueHandler.js';
+import { type QueueChannel } from '../libs/types/queueChannel.js';
+import { type QueueController } from '../libs/types/queueController.js';
+import { type QueueHandler, type QueueHandlerPayload } from '../libs/types/queueHandler.js';
 import { type EmailQueueController } from '../modules/userModule/api/queueControllers/emailQueueController/emailQueueController.js';
 import { userSymbols } from '../modules/userModule/symbols.js';
 

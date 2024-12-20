@@ -8,10 +8,9 @@ import {
   type ListObjectsV2CommandInput,
   PutObjectCommand,
   ListBucketsCommand,
+  type S3Client,
 } from '@aws-sdk/client-s3';
 import { existsSync, readFileSync } from 'node:fs';
-
-import { type S3Client } from '../src/s3Client.js';
 
 export class S3TestUtils {
   public constructor(private readonly s3Client: S3Client) {}

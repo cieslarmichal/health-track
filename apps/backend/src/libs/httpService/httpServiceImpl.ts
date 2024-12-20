@@ -4,8 +4,8 @@ import fetch from 'node-fetch';
 
 import { type LoggerService } from '../logger/loggerService.js';
 import { HttpServiceError } from './errors/httpServiceError.js';
+import { type HttpService, type SendRequestPayload } from './httpService.js';
 import { type HttpResponse } from '../http/httpResponse.js';
-import { type HttpService, type SendRequestPayload } from './services/httpService/httpService.js';
 
 export class HttpServiceImpl implements HttpService {
   public constructor(private readonly loggerService: LoggerService) {}
@@ -56,7 +56,7 @@ export class HttpServiceImpl implements HttpService {
       throw new HttpServiceError({
         method,
         url,
-        error,
+        originalError: error,
       });
     }
   }

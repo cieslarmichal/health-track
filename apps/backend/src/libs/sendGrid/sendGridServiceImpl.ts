@@ -2,7 +2,7 @@ import { type SendEmailPayload, type SendGridService } from './sendGridService.j
 import { HttpHeader } from '../http/httpHeader.js';
 import { HttpMediaType } from '../http/httpMediaType.js';
 import { HttpMethodName } from '../http/httpMethodName.js';
-import { type HttpService } from '../httpService/services/httpService/httpService.js';
+import { type HttpService } from '../httpService/httpService.js';
 
 export interface SendGridConfig {
   readonly apiKey: string;

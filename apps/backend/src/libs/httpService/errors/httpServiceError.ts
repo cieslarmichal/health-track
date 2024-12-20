@@ -1,9 +1,8 @@
-import { BaseError } from '../../../common/errors/baseError.js';
+import { BaseError, type BaseErrorContext } from '../../errors/baseError.js';
 
-interface Context {
+interface Context extends BaseErrorContext {
   readonly url: string;
   readonly method: string;
-  readonly [key: string]: unknown;
 }
 
 export class HttpServiceError extends BaseError<Context> {
