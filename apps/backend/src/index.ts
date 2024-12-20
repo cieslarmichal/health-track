@@ -1,23 +1,13 @@
 import { Application } from './core/application.js';
-import { BaseError } from './libs/errors/baseError.js';
+import { serializeError } from './libs/errors/serializeError.js';
 
 export const finalErrorHandler = async (error: unknown): Promise<void> => {
-  let formattedError = error;
+  const serializedError = serializeError(error);
 
-  if (error instanceof Error) {
-    formattedError = {
-      name: error.name,
-      message: error.message,
-      ...(error instanceof BaseError ? { ...error.context } : undefined),
-    };
-  }
-
-  console.error(
-    JSON.stringify({
-      message: 'Application error.',
-      context: formattedError,
-    }),
-  );
+  console.error({
+    message: 'Application error.',
+    context: serializedError,
+  });
 
   await Application.stop();
 

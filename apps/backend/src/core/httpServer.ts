@@ -9,19 +9,18 @@ import { fastifySwaggerUi } from '@fastify/swagger-ui';
 import { type TypeBoxTypeProvider } from '@fastify/type-provider-typebox';
 import { fastify, type FastifyInstance } from 'fastify';
 import { type FastifySchemaValidationError } from 'fastify/types/schema.js';
-import { type Server } from 'http';
 
 import { type ApplicationHttpController } from './api/httpControllers/applicationHttpController/applicationHttpController.js';
 import { type Config } from './config.js';
 import { HttpRouter } from './httpRouter.js';
 import { coreSymbols, symbols } from './symbols.js';
 import { type DependencyInjectionContainer } from '../libs/dependencyInjection/dependencyInjectionContainer.js';
-import { BaseError } from '../libs/errors/baseError.js';
 import { ForbiddenAccessError } from '../libs/errors/forbiddenAccessError.js';
 import { InputNotValidError } from '../libs/errors/inputNotValidError.js';
 import { OperationNotValidError } from '../libs/errors/operationNotValidError.js';
 import { ResourceAlreadyExistsError } from '../libs/errors/resourceAlreadyExistsError.js';
 import { ResourceNotFoundError } from '../libs/errors/resourceNotFoundError.js';
+import { serializeError } from '../libs/errors/serializeError.js';
 import { UnauthorizedAccessError } from '../libs/errors/unathorizedAccessError.js';
 import { type HttpController } from '../libs/http/httpController.js';
 import { HttpStatusCode } from '../libs/http/httpStatusCode.js';
@@ -139,10 +138,6 @@ export class HttpServer {
     });
   }
 
-  public getInternalServerInstance(): Server {
-    return this.fastifyServer.server;
-  }
-
   private setupErrorHandler(): void {
     this.fastifyServer.setSchemaErrorFormatter((errors, dataVar) => {
       const { instancePath, message } = errors[0] as FastifySchemaValidationError;
@@ -154,28 +149,22 @@ export class HttpServer {
     });
 
     this.fastifyServer.setErrorHandler((error, request, reply) => {
-      const errorContext = {
-        ...(error instanceof Error
-          ? {
-              name: error.name,
-              message: error.message,
-              stack: error.stack,
-              cause: error.cause,
-              context: error instanceof BaseError ? error.context : undefined,
-            }
-          : { error }),
-      };
+      const serializedError = serializeError(error);
 
       this.loggerService.error({
-        message: 'Caught an error in the HTTP server.',
+        message: 'Caught an error in HTTP server.',
         endpoint: `${request.method} ${request.url}`,
-        error: errorContext,
+        error: serializedError,
       });
 
       const responseError = {
-        ...errorContext,
+        ...serializedError,
         stack: undefined,
         cause: undefined,
+        context: {
+          ...(serializedError['context'] ? (serializedError['context'] as Record<string, unknown>) : {}),
+          originalError: undefined,
+        },
       };
 
       if (error instanceof InputNotValidError) {

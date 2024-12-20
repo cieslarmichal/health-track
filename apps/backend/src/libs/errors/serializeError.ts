@@ -1,7 +1,7 @@
 export function serializeError(error: unknown): Record<string, unknown> {
-  if (error instanceof Error) {
-    const serializedError: Record<string, unknown> = {};
+  const serializedError: Record<string, unknown> = {};
 
+  if (error instanceof Error) {
     for (const key of Object.getOwnPropertyNames(error)) {
       const value = Reflect.get(error, key);
 
@@ -9,7 +9,7 @@ export function serializeError(error: unknown): Record<string, unknown> {
     }
 
     return serializedError;
+  } else {
+    return { error };
   }
-
-  return error as Record<string, unknown>;
 }
