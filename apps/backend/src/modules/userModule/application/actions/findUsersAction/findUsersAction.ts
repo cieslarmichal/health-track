@@ -1,4 +1,4 @@
-import { type QueryHandler } from '../../../../../common/types/queryHandler.js';
+import { type Action } from '../../../../../common/types/queryHandler.js';
 import { type User } from '../../../domain/entities/user/user.js';
 
 export interface ExecutePayload {
@@ -11,4 +11,4 @@ export interface ExecuteResult {
   readonly total: number;
 }
 
-export type FindUsersQueryHandler = QueryHandler<ExecutePayload, ExecuteResult>;
+export type FindUsersAction = Action<ExecutePayload, ExecuteResult>;

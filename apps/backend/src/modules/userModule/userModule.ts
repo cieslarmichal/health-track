@@ -7,10 +7,10 @@ import { type ChangeUserPasswordAction } from './application/actions/changeUserP
 import { ChangeUserPasswordActionImpl } from './application/actions/changeUserPasswordCommandHandler/changeUserPasswordCommandHandlerImpl.js';
 import { type DeleteUserAction } from './application/actions/deleteUserCommandHandler/deleteUserCommandHandler.js';
 import { DeleteUserActionImpl } from './application/actions/deleteUserCommandHandler/deleteUserCommandHandlerImpl.js';
-import { type FindUserQueryHandler } from './application/actions/findUserQueryHandler/findUserQueryHandler.js';
-import { FindUserQueryHandlerImpl } from './application/actions/findUserQueryHandler/findUserQueryHandlerImpl.js';
-import { type FindUsersQueryHandler } from './application/actions/findUsersQueryHandler/findUsersQueryHandler.js';
-import { FindUsersQueryHandlerImpl } from './application/actions/findUsersQueryHandler/findUsersQueryHandlerImpl.js';
+import { type FindUserAction } from './application/actions/findUserAction/findUserAction.js';
+import { FindUserActionImpl } from './application/actions/findUserAction/findUserActionImpl.js';
+import { type FindUsersAction } from './application/actions/findUsersAction/findUsersAction.js';
+import { FindUsersActionImpl } from './application/actions/findUsersAction/findUsersActionImpl.js';
 import { type LoginUserAction } from './application/actions/loginUserCommandHandler/loginUserCommandHandler.js';
 import { LoginUserActionImpl } from './application/actions/loginUserCommandHandler/loginUserCommandHandlerImpl.js';
 import { type LogoutUserAction } from './application/actions/logoutUserCommandHandler/logoutUserCommandHandler.js';
@@ -180,14 +180,14 @@ export class UserModule implements DependencyInjectionModule {
         ),
     );
 
-    container.bind<FindUserQueryHandler>(
-      symbols.findUserQueryHandler,
-      () => new FindUserQueryHandlerImpl(container.get<UserRepository>(symbols.userRepository)),
+    container.bind<FindUserAction>(
+      symbols.findUserAction,
+      () => new FindUserActionImpl(container.get<UserRepository>(symbols.userRepository)),
     );
 
-    container.bind<FindUsersQueryHandler>(
-      symbols.findUsersQueryHandler,
-      () => new FindUsersQueryHandlerImpl(container.get<UserRepository>(symbols.userRepository)),
+    container.bind<FindUsersAction>(
+      symbols.findUsersAction,
+      () => new FindUsersActionImpl(container.get<UserRepository>(symbols.userRepository)),
     );
 
     container.bind<SendVerificationEmailAction>(
@@ -220,7 +220,7 @@ export class UserModule implements DependencyInjectionModule {
           container.get<LoginUserAction>(symbols.loginUserAction),
           container.get<DeleteUserAction>(symbols.deleteUserAction),
           container.get<UpdateUserAction>(symbols.updateUserAction),
-          container.get<FindUserQueryHandler>(symbols.findUserQueryHandler),
+          container.get<FindUserAction>(symbols.findUserAction),
           container.get<AccessControlService>(authSymbols.accessControlService),
           container.get<VerifyUserEmailAction>(symbols.verifyUserEmailAction),
           container.get<SendResetPasswordEmailAction>(symbols.sendResetPasswordEmailAction),

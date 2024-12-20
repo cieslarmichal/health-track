@@ -93,7 +93,7 @@ import { type SendResetPasswordEmailAction } from '../../../application/actions/
 import { type SendVerificationEmailAction } from '../../../application/actions/sendVerificationEmailAction/sendVerificationEmailAction.js';
 import { type UpdateUserAction } from '../../../application/actions/updateUserAction/updateUserAction.js';
 import { type VerifyUserEmailAction } from '../../../application/actions/verifyUserEmailAction/verifyUserEmailAction.js';
-import { type FindUserQueryHandler } from '../../../application/actions/findUserQueryHandler/findUserQueryHandler.js';
+import { type FindUserAction } from '../../../application/actions/findUserAction/findUserAction.js';
 import { type User } from '../../../domain/entities/user/user.js';
 import { type UserDto } from './schemas/userDto.js';
 
@@ -106,7 +106,7 @@ export class UserHttpController implements HttpController {
     private readonly loginUserAction: LoginUserAction,
     private readonly deleteUserAction: DeleteUserAction,
     private readonly updateUserAction: UpdateUserAction,
-    private readonly findUserQueryHandler: FindUserQueryHandler,
+    private readonly findUserAction: FindUserAction,
     private readonly accessControlService: AccessControlService,
     private readonly verifyUserEmailAction: VerifyUserEmailAction,
     private readonly resetUserPasswordAction: SendResetPasswordEmailAction,
@@ -433,7 +433,7 @@ export class UserHttpController implements HttpController {
       expectedUserId: userId,
     });
 
-    const { user } = await this.findUserQueryHandler.execute({ userId });
+    const { user } = await this.findUserAction.execute({ userId });
 
     return {
       statusCode: HttpStatusCode.ok,
@@ -446,7 +446,7 @@ export class UserHttpController implements HttpController {
       authorizationHeader: request.headers['authorization'],
     });
 
-    const { user } = await this.findUserQueryHandler.execute({ userId });
+    const { user } = await this.findUserAction.execute({ userId });
 
     return {
       statusCode: HttpStatusCode.ok,

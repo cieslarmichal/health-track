@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, afterEach } from 'vitest';
 
-import { type FindUsersQueryHandler } from './findUsersQueryHandler.js';
+import { type FindUsersAction } from './findUsersAction.js';
 import { testSymbols } from '../../../../../../tests/symbols.js';
 import { TestContainer } from '../../../../../../tests/testContainer.js';
 import { coreSymbols } from '../../../../../core/symbols.js';
@@ -8,8 +8,8 @@ import { type DatabaseClient } from '../../../../../libs/database/clients/databa
 import { symbols } from '../../../symbols.js';
 import { type UserTestUtils } from '../../../tests/utils/userTestUtils/userTestUtils.js';
 
-describe('FindUsersQueryHandlerImpl', () => {
-  let queryHandler: FindUsersQueryHandler;
+describe('FindUsersActionImpl', () => {
+  let queryHandler: FindUsersAction;
 
   let databaseClient: DatabaseClient;
 
@@ -18,7 +18,7 @@ describe('FindUsersQueryHandlerImpl', () => {
   beforeEach(async () => {
     const container = TestContainer.create();
 
-    queryHandler = container.get<FindUsersQueryHandler>(symbols.findUsersQueryHandler);
+    queryHandler = container.get<FindUsersAction>(symbols.findUsersAction);
 
     databaseClient = container.get<DatabaseClient>(coreSymbols.databaseClient);
 

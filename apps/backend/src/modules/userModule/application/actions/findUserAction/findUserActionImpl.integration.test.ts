@@ -1,6 +1,6 @@
 import { beforeEach, afterEach, expect, it, describe } from 'vitest';
 
-import { type FindUserQueryHandler } from './findUserQueryHandler.js';
+import { type FindUserAction } from './findUserAction.js';
 import { TestContainer } from '../../../../../../tests/testContainer.js';
 import { ResourceNotFoundError } from '../../../../../common/errors/resourceNotFoundError.js';
 import { coreSymbols } from '../../../../../core/symbols.js';
@@ -9,8 +9,8 @@ import { symbols } from '../../../symbols.js';
 import { UserTestFactory } from '../../../tests/factories/userTestFactory/userTestFactory.js';
 import { UserTestUtils } from '../../../tests/utils/userTestUtils/userTestUtils.js';
 
-describe('FindUserQueryHandler', () => {
-  let findUserQueryHandler: FindUserQueryHandler;
+describe('FindUserAction', () => {
+  let findUserAction: FindUserAction;
 
   let databaseClient: DatabaseClient;
 
@@ -21,7 +21,7 @@ describe('FindUserQueryHandler', () => {
   beforeEach(async () => {
     const container = TestContainer.create();
 
-    findUserQueryHandler = container.get<FindUserQueryHandler>(symbols.findUserQueryHandler);
+    findUserAction = container.get<FindUserAction>(symbols.findUserAction);
 
     databaseClient = container.get<DatabaseClient>(coreSymbols.databaseClient);
 
@@ -39,7 +39,7 @@ describe('FindUserQueryHandler', () => {
   it('finds a User by id', async () => {
     const user = await userTestUtils.createAndPersist();
 
-    const { user: foundUser } = await findUserQueryHandler.execute({ userId: user.id });
+    const { user: foundUser } = await findUserAction.execute({ userId: user.id });
 
     expect(foundUser).not.toBeNull();
   });
@@ -48,7 +48,7 @@ describe('FindUserQueryHandler', () => {
     const nonExistentUser = userTestFactory.create();
 
     try {
-      await findUserQueryHandler.execute({ userId: nonExistentUser.getId() });
+      await findUserAction.execute({ userId: nonExistentUser.getId() });
     } catch (error) {
       expect(error).toBeInstanceOf(ResourceNotFoundError);
 
