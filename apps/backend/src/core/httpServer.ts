@@ -77,7 +77,10 @@ export class HttpServer {
     });
 
     this.fastifyServer.addHook('onRequest', (request, _reply, done) => {
-      if (request.url.includes('/api/docs') || request.url.includes('/api/health')) {
+      if (
+        request.url.includes(`${this.httpRouter.rootPath}/docs`) ||
+        request.url.includes(`${this.httpRouter.rootPath}/health`)
+      ) {
         return done();
       }
 
@@ -90,7 +93,10 @@ export class HttpServer {
     });
 
     this.fastifyServer.addHook('onSend', (request, reply, _payload, done) => {
-      if (request.url.includes('/api/docs') || request.url.includes('/api/health')) {
+      if (
+        request.url.includes(`${this.httpRouter.rootPath}/docs`) ||
+        request.url.includes(`${this.httpRouter.rootPath}/health`)
+      ) {
         return done();
       }
 
@@ -214,7 +220,7 @@ export class HttpServer {
     });
 
     await this.fastifyServer.register(fastifySwaggerUi, {
-      routePrefix: '/api/docs',
+      routePrefix: `${this.httpRouter.rootPath}/docs`,
       uiConfig: {
         defaultModelRendering: 'model',
         defaultModelsExpandDepth: 3,

@@ -2,13 +2,11 @@ import { type Static, Type } from '@sinclair/typebox';
 
 import type * as contracts from '@common/contracts';
 
+import { emailSchema } from './userDto.js';
 import { type TypeExtends } from '../../../../../../libs/types/schemaExtends.js';
 
 export const sendVerificationEmailBodyDtoSchema = Type.Object({
-  email: Type.String({
-    format: 'email',
-    maxLength: 254,
-  }),
+  email: emailSchema,
 });
 
 export type SendVerificationEmailBodyDto = TypeExtends<

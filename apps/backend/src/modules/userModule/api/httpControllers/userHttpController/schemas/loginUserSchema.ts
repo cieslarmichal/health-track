@@ -2,17 +2,12 @@ import { type Static, Type } from '@sinclair/typebox';
 
 import type * as contracts from '@common/contracts';
 
+import { emailSchema, passwordSchema } from './userDto.js';
 import { type TypeExtends } from '../../../../../../libs/types/schemaExtends.js';
 
 export const loginUserBodyDtoSchema = Type.Object({
-  email: Type.String({
-    format: 'email',
-    maxLength: 254,
-  }),
-  password: Type.String({
-    minLength: 8,
-    maxLength: 64,
-  }),
+  email: emailSchema,
+  password: passwordSchema,
 });
 
 export type LoginUserBodyDto = TypeExtends<Static<typeof loginUserBodyDtoSchema>, contracts.LoginUserRequestBody>;
