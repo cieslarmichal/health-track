@@ -98,7 +98,7 @@ export class Application {
 
     Application.server = new HttpServer(Application.container);
 
-    await Application.start();
+    await Application.server.start();
   }
 
   public static async stop(): Promise<void> {
