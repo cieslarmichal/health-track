@@ -13,7 +13,9 @@ export class AccessControlServiceImpl implements AccessControlService {
   public constructor(private readonly tokenService: TokenService) {}
 
   public async verifyBearerToken(payload: VerifyBearerTokenPayload): Promise<VerifyBearerTokenResult> {
-    const { authorizationHeader, expectedUserId, expectedRole } = payload;
+    const { requestHeaders, expectedUserId, expectedRole } = payload;
+
+    const authorizationHeader = requestHeaders['authorization'];
 
     if (!authorizationHeader) {
       throw new UnauthorizedAccessError({

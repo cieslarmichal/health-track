@@ -360,9 +360,7 @@ export class UserHttpController implements HttpController {
     let userId: string | undefined;
 
     try {
-      const result = await this.accessControlService.verifyBearerToken({
-        authorizationHeader: request.headers['authorization'],
-      });
+      const result = await this.accessControlService.verifyBearerToken({ requestHeaders: request.headers });
 
       userId = result.userId;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -396,9 +394,7 @@ export class UserHttpController implements HttpController {
   }
 
   private async findMyUser(request: HttpRequest): Promise<HttpOkResponse<FindMyUserResponseBodyDto>> {
-    const { userId } = await this.accessControlService.verifyBearerToken({
-      authorizationHeader: request.headers['authorization'],
-    });
+    const { userId } = await this.accessControlService.verifyBearerToken({ requestHeaders: request.headers });
 
     const { user } = await this.findUserAction.execute({ userId });
 
@@ -414,7 +410,7 @@ export class UserHttpController implements HttpController {
     const { userId } = request.pathParams;
 
     await this.accessControlService.verifyBearerToken({
-      authorizationHeader: request.headers['authorization'],
+      requestHeaders: request.headers,
       expectedUserId: userId,
     });
 
@@ -434,7 +430,7 @@ export class UserHttpController implements HttpController {
     const { name } = request.body;
 
     await this.accessControlService.verifyBearerToken({
-      authorizationHeader: request.headers['authorization'],
+      requestHeaders: request.headers,
       expectedUserId: userId,
     });
 
@@ -485,7 +481,7 @@ export class UserHttpController implements HttpController {
     const { refreshToken, accessToken } = request.body;
 
     await this.accessControlService.verifyBearerToken({
-      authorizationHeader: request.headers['authorization'],
+      requestHeaders: request.headers,
       expectedUserId: userId,
     });
 

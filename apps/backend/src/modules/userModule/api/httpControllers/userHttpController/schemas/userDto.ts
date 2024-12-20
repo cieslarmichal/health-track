@@ -20,7 +20,7 @@ export const passwordSchema = Type.String({
 export const userDtoSchema = Type.Object({
   id: Type.String({ format: 'uuid' }),
   email: emailSchema,
-  name: userNameSchema
+  name: userNameSchema,
   isEmailVerified: Type.Boolean(),
   role: Type.Enum(UserRole),
 });
