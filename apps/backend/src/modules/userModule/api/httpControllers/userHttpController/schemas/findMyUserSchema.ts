@@ -2,8 +2,8 @@ import { type Static } from '@sinclair/typebox';
 
 import type * as contracts from '@common/contracts';
 
-import { type TypeExtends } from '../../../../../../common/types/schemaExtends.js';
 import { userDtoSchema } from './userDto.js';
+import { type TypeExtends } from '../../../../../../libs/types/schemaExtends.js';
 
 export const findMyUserResponseBodyDtoSchema = userDtoSchema;
 

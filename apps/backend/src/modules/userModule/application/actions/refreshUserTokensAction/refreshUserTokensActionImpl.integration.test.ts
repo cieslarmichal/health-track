@@ -1,13 +1,13 @@
 import { beforeEach, expect, it, describe, afterEach } from 'vitest';
 
 import { type RefreshUserTokensAction } from './refreshUserTokensAction.js';
-import { Generator } from '../../../../../../tests/generator.js';
-import { testSymbols } from '../../../../../../tests/symbols.js';
-import { TestContainer } from '../../../../../../tests/testContainer.js';
-import { OperationNotValidError } from '../../../../../common/errors/operationNotValidError.js';
 import { type Config } from '../../../../../core/config.js';
 import { coreSymbols } from '../../../../../core/symbols.js';
-import { type DatabaseClient } from '../../../../../libs/database/clients/databaseClient/databaseClient.js';
+import { type DatabaseClient } from '../../../../../libs/database/databaseClient.js';
+import { OperationNotValidError } from '../../../../../libs/errors/operationNotValidError.js';
+import { Generator } from '../../../../../tests/generator.js';
+import { testSymbols } from '../../../../../tests/symbols.js';
+import { TestContainer } from '../../../../../tests/testContainer.js';
 import { type TokenService } from '../../../../authModule/application/services/tokenService/tokenService.js';
 import { authSymbols } from '../../../../authModule/symbols.js';
 import { TokenType } from '../../../domain/types/tokenType.js';
@@ -76,8 +76,6 @@ describe('RefreshUserTokensAction', () => {
     const refreshTokenPayload = tokenService.verifyToken({ token: result.refreshToken });
 
     expect(accessTokenPayload['userId']).toBe(user.id);
-
-    expect(accessTokenPayload['role']).toBe(user.role);
 
     expect(refreshTokenPayload['userId']).toBe(user.id);
 

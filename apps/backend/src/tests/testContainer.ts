@@ -6,7 +6,11 @@ import { coreSymbols } from '../core/symbols.js';
 import { type DatabaseClient } from '../libs/database/databaseClient.js';
 import { type DependencyInjectionContainer } from '../libs/dependencyInjection/dependencyInjectionContainer.js';
 import { S3TestUtils } from '../libs/s3/tests/s3TestUtils.js';
+import { type SendGridService } from '../libs/sendGrid/sendGridService.js';
+import { type EmailMessageBus } from '../modules/userModule/application/messageBuses/emailMessageBus/emailMessageBus.js';
+import { userSymbols } from '../modules/userModule/symbols.js';
 import { BlacklistTokenTestUtils } from '../modules/userModule/tests/utils/blacklistTokenTestUtils/blacklistTokenTestUtils.js';
+import { EmailEventTestUtils } from '../modules/userModule/tests/utils/emailEventTestUtils/emailEventTestUtils.js';
 import { UserTestUtils } from '../modules/userModule/tests/utils/userTestUtils/userTestUtils.js';
 
 export class TestContainer {
@@ -22,6 +26,19 @@ export class TestContainer {
       testSymbols.blacklistTokenTestUtils,
       () => new BlacklistTokenTestUtils(container.get<DatabaseClient>(coreSymbols.databaseClient)),
     );
+
+    container.bind<EmailEventTestUtils>(
+      testSymbols.emailEventTestUtils,
+      () => new EmailEventTestUtils(container.get<DatabaseClient>(coreSymbols.databaseClient)),
+    );
+
+    container.overrideBinding<SendGridService>(coreSymbols.sendGridService, () => ({
+      sendEmail: async (): Promise<void> => {},
+    }));
+
+    container.overrideBinding<EmailMessageBus>(userSymbols.emailMessageBus, () => ({
+      sendEvent: async (): Promise<void> => {},
+    }));
 
     container.bind<S3TestUtils>(
       testSymbols.s3TestUtils,

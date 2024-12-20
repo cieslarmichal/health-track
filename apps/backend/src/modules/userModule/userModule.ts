@@ -3,30 +3,28 @@ import { coreSymbols } from '../../core/symbols.js';
 import { authSymbols } from '../authModule/symbols.js';
 import { UserHttpController } from './api/httpControllers/userHttpController/userHttpController.js';
 import { EmailQueueController } from './api/queueControllers/emailQueueController/emailQueueController.js';
-import { type ChangeUserPasswordAction } from './application/actions/changeUserPasswordCommandHandler/changeUserPasswordCommandHandler.js';
-import { ChangeUserPasswordActionImpl } from './application/actions/changeUserPasswordCommandHandler/changeUserPasswordCommandHandlerImpl.js';
-import { type DeleteUserAction } from './application/actions/deleteUserCommandHandler/deleteUserCommandHandler.js';
-import { DeleteUserActionImpl } from './application/actions/deleteUserCommandHandler/deleteUserCommandHandlerImpl.js';
+import { type ChangeUserPasswordAction } from './application/actions/changeUserPasswordAction/changeUserPasswordAction.js';
+import { ChangeUserPasswordActionImpl } from './application/actions/changeUserPasswordAction/changeUserPasswordActionImpl.js';
+import { type DeleteUserAction } from './application/actions/deleteUserAction/deleteUserAction.js';
+import { DeleteUserActionImpl } from './application/actions/deleteUserAction/deleteUserActionImpl.js';
 import { type FindUserAction } from './application/actions/findUserAction/findUserAction.js';
 import { FindUserActionImpl } from './application/actions/findUserAction/findUserActionImpl.js';
-import { type FindUsersAction } from './application/actions/findUsersAction/findUsersAction.js';
-import { FindUsersActionImpl } from './application/actions/findUsersAction/findUsersActionImpl.js';
-import { type LoginUserAction } from './application/actions/loginUserCommandHandler/loginUserCommandHandler.js';
-import { LoginUserActionImpl } from './application/actions/loginUserCommandHandler/loginUserCommandHandlerImpl.js';
-import { type LogoutUserAction } from './application/actions/logoutUserCommandHandler/logoutUserCommandHandler.js';
-import { LogoutUserActionImpl } from './application/actions/logoutUserCommandHandler/logoutUserCommandHandlerImpl.js';
-import { type RefreshUserTokensAction } from './application/actions/refreshUserTokensCommandHandler/refreshUserTokensCommandHandler.js';
-import { RefreshUserTokensActionImpl } from './application/actions/refreshUserTokensCommandHandler/refreshUserTokensCommandHandlerImpl.js';
-import { type RegisterUserAction } from './application/actions/registerUserCommandHandler/registerUserCommandHandler.js';
-import { RegisterUserActionImpl } from './application/actions/registerUserCommandHandler/registerUserCommandHandlerImpl.js';
-import { type SendResetPasswordEmailAction } from './application/actions/sendResetPasswordEmailCommandHandler/sendResetPasswordEmailCommandHandler.js';
-import { SendResetPasswordEmailActionImpl } from './application/actions/sendResetPasswordEmailCommandHandler/sendResetPasswordEmailCommandHandlerImpl.js';
-import { type SendVerificationEmailAction } from './application/actions/sendVerificationEmailCommandHandler/sendVerificationEmailCommandHandler.js';
-import { SendVerificationEmailActionImpl } from './application/actions/sendVerificationEmailCommandHandler/sendVerificationEmailCommandHandlerImpl.js';
-import { type UpdateUserAction } from './application/actions/updateUserCommandHandler/updateUserCommandHandler.js';
-import { UpdateUserActionImpl } from './application/actions/updateUserCommandHandler/updateUserCommandHandlerImpl.js';
-import { type VerifyUserEmailAction } from './application/actions/verifyUserEmailCommandHandler/verifyUserEmailCommandHandler.js';
-import { VerifyUserEmailActionImpl } from './application/actions/verifyUserEmailCommandHandler/verifyUserEmailCommandHandlerImpl.js';
+import { type LoginUserAction } from './application/actions/loginUserAction/loginUserAction.js';
+import { LoginUserActionImpl } from './application/actions/loginUserAction/loginUserActionImpl.js';
+import { type LogoutUserAction } from './application/actions/logoutUserAction/logoutUserAction.js';
+import { LogoutUserActionImpl } from './application/actions/logoutUserAction/logoutUserActionImpl.js';
+import { type RefreshUserTokensAction } from './application/actions/refreshUserTokensAction/refreshUserTokensAction.js';
+import { RefreshUserTokensActionImpl } from './application/actions/refreshUserTokensAction/refreshUserTokensActionImpl.js';
+import { type RegisterUserAction } from './application/actions/registerUserAction/registerUserAction.js';
+import { RegisterUserActionImpl } from './application/actions/registerUserAction/registerUserActionImpl.js';
+import { type SendResetPasswordEmailAction } from './application/actions/sendResetPasswordEmailAction/sendResetPasswordEmailAction.js';
+import { SendResetPasswordEmailActionImpl } from './application/actions/sendResetPasswordEmailAction/sendResetPasswordEmailActionImpl.js';
+import { type SendVerificationEmailAction } from './application/actions/sendVerificationEmailAction/sendVerificationEmailAction.js';
+import { SendVerificationEmailActionImpl } from './application/actions/sendVerificationEmailAction/sendVerificationEmailActionImpl.js';
+import { type UpdateUserAction } from './application/actions/updateUserAction/updateUserAction.js';
+import { UpdateUserActionImpl } from './application/actions/updateUserAction/updateUserActionImpl.js';
+import { type VerifyUserEmailAction } from './application/actions/verifyUserEmailAction/verifyUserEmailAction.js';
+import { VerifyUserEmailActionImpl } from './application/actions/verifyUserEmailAction/verifyUserEmailActionImpl.js';
 import { type EmailMessageBus } from './application/messageBuses/emailMessageBus/emailMessageBus.js';
 import { type HashService } from './application/services/hashService/hashService.js';
 import { HashServiceImpl } from './application/services/hashService/hashServiceImpl.js';
@@ -42,8 +40,6 @@ import { type DependencyInjectionContainer } from '../../libs/dependencyInjectio
 import { type DependencyInjectionModule } from '../../libs/dependencyInjection/dependencyInjectionModule.js';
 import { type LoggerService } from '../../libs/logger/loggerService.js';
 import { type SendGridService } from '../../libs/sendGrid/sendGridService.js';
-import { type BlacklistTokenMapper } from './infrastructure/repositories/blacklistTokenRepository/blacklistTokenMapper/blacklistTokenMapper.js';
-import { BlacklistTokenMapperImpl } from './infrastructure/repositories/blacklistTokenRepository/blacklistTokenMapper/blacklistTokenMapperImpl.js';
 import { BlacklistTokenRepositoryImpl } from './infrastructure/repositories/blacklistTokenRepository/blacklistTokenRepositoryImpl.js';
 import { EmailEventRepositoryImpl } from './infrastructure/repositories/emailEventRepository/emailEventRepositoryImpl.js';
 import { EmailEventMapper } from './infrastructure/repositories/emailEventRepository/mappers/emailEventMapper/emailEventMapper.js';
@@ -53,6 +49,8 @@ import { UserRepositoryImpl } from './infrastructure/repositories/userRepository
 import { type UuidService } from '../../libs/uuid/uuidService.js';
 import { type AccessControlService } from '../authModule/application/services/accessControlService/accessControlService.js';
 import { type TokenService } from '../authModule/application/services/tokenService/tokenService.js';
+import { type BlacklistTokenMapper } from './infrastructure/repositories/blacklistTokenRepository/blacklistTokenMapper/blacklistTokenMapper.js';
+import { BlacklistTokenMapperImpl } from './infrastructure/repositories/blacklistTokenRepository/blacklistTokenMapper/blacklistTokenMapperImpl.js';
 
 export class UserModule implements DependencyInjectionModule {
   public declareBindings(container: DependencyInjectionContainer): void {
@@ -183,11 +181,6 @@ export class UserModule implements DependencyInjectionModule {
     container.bind<FindUserAction>(
       symbols.findUserAction,
       () => new FindUserActionImpl(container.get<UserRepository>(symbols.userRepository)),
-    );
-
-    container.bind<FindUsersAction>(
-      symbols.findUsersAction,
-      () => new FindUsersActionImpl(container.get<UserRepository>(symbols.userRepository)),
     );
 
     container.bind<SendVerificationEmailAction>(

@@ -1,7 +1,7 @@
 import { type EmailEventMapper } from './mappers/emailEventMapper/emailEventMapper.js';
-import { RepositoryError } from '../../../../../common/errors/repositoryError.js';
-import { type DatabaseClient } from '../../../../../libs/database/clients/databaseClient/databaseClient.js';
-import { type UuidService } from '../../../../../libs/uuid/services/uuidService/uuidService.js';
+import { type DatabaseClient } from '../../../../../libs/database/databaseClient.js';
+import { RepositoryError } from '../../../../../libs/errors/repositoryError.js';
+import { type UuidService } from '../../../../../libs/uuid/uuidService.js';
 import { type EmailEvent } from '../../../domain/entities/emailEvent/emailEvent.js';
 import { type EmailEventDraft } from '../../../domain/entities/emailEvent/emailEventDraft.ts/emailEventDraft.js';
 import { EmailEventStatus } from '../../../domain/entities/emailEvent/types/emailEventStatus.js';
@@ -33,7 +33,7 @@ export class EmailEventRepositoryImpl implements EmailEventRepository {
       throw new RepositoryError({
         entity: 'EmailEvent',
         operation: 'find',
-        error,
+        originalError: error,
       });
     }
 
@@ -51,7 +51,7 @@ export class EmailEventRepositoryImpl implements EmailEventRepository {
       throw new RepositoryError({
         entity: 'EmailEvent',
         operation: 'find',
-        error,
+        originalError: error,
       });
     }
 
@@ -69,7 +69,7 @@ export class EmailEventRepositoryImpl implements EmailEventRepository {
       throw new RepositoryError({
         entity: 'EmailEvent',
         operation: 'update',
-        error,
+        originalError: error,
       });
     }
   }
@@ -87,7 +87,7 @@ export class EmailEventRepositoryImpl implements EmailEventRepository {
       throw new RepositoryError({
         entity: 'EmailEvent',
         operation: 'create',
-        error,
+        originalError: error,
       });
     }
   }
@@ -101,7 +101,7 @@ export class EmailEventRepositoryImpl implements EmailEventRepository {
       throw new RepositoryError({
         entity: 'EmailEvent',
         operation: 'delete',
-        error,
+        originalError: error,
       });
     }
   }

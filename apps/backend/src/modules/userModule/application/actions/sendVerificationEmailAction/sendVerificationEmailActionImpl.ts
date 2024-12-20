@@ -1,7 +1,7 @@
 import { type ExecutePayload, type SendVerificationEmailAction } from './sendVerificationEmailAction.js';
-import { OperationNotValidError } from '../../../../../common/errors/operationNotValidError.js';
 import { type Config } from '../../../../../core/config.js';
-import { type LoggerService } from '../../../../../libs/logger/services/loggerService/loggerService.js';
+import { OperationNotValidError } from '../../../../../libs/errors/operationNotValidError.js';
+import { type LoggerService } from '../../../../../libs/logger/loggerService.js';
 import { type TokenService } from '../../../../authModule/application/services/tokenService/tokenService.js';
 import { EmailEventDraft } from '../../../domain/entities/emailEvent/emailEventDraft.ts/emailEventDraft.js';
 import { EmailEventType } from '../../../domain/entities/emailEvent/types/emailEventType.js';

@@ -2,7 +2,7 @@ import { type Static, Type } from '@sinclair/typebox';
 
 import type * as contracts from '@common/contracts';
 
-import { type TypeExtends } from '../../../../../../common/types/schemaExtends.js';
+import { type TypeExtends } from '../../../../../../libs/types/schemaExtends.js';
 
 export const refreshUserTokensBodyDtoSchema = Type.Object({
   refreshToken: Type.String({ minLength: 1 }),

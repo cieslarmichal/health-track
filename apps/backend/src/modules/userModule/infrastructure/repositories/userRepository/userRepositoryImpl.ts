@@ -1,8 +1,8 @@
 import { type UserMapper } from './userMapper/userMapper.js';
-import { OperationNotValidError } from '../../../../../common/errors/operationNotValidError.js';
-import { RepositoryError } from '../../../../../common/errors/repositoryError.js';
-import { type DatabaseClient } from '../../../../../libs/database/clients/databaseClient/databaseClient.js';
-import { type UuidService } from '../../../../../libs/uuid/services/uuidService/uuidService.js';
+import { type DatabaseClient } from '../../../../../libs/database/databaseClient.js';
+import { OperationNotValidError } from '../../../../../libs/errors/operationNotValidError.js';
+import { RepositoryError } from '../../../../../libs/errors/repositoryError.js';
+import { type UuidService } from '../../../../../libs/uuid/uuidService.js';
 import { User, type UserState } from '../../../domain/entities/user/user.js';
 import {
   type UserRepository,
@@ -60,7 +60,7 @@ export class UserRepositoryImpl implements UserRepository {
       throw new RepositoryError({
         entity: 'User',
         operation: 'create',
-        error,
+        originalError: error,
       });
     }
 
@@ -82,7 +82,7 @@ export class UserRepositoryImpl implements UserRepository {
       throw new RepositoryError({
         entity: 'User',
         operation: 'update',
-        error,
+        originalError: error,
       });
     }
 
@@ -124,7 +124,7 @@ export class UserRepositoryImpl implements UserRepository {
       throw new RepositoryError({
         entity: 'User',
         operation: 'find',
-        error,
+        originalError: error,
       });
     }
 
@@ -149,7 +149,7 @@ export class UserRepositoryImpl implements UserRepository {
       throw new RepositoryError({
         entity: 'User',
         operation: 'find',
-        error,
+        originalError: error,
       });
     }
 
@@ -181,7 +181,7 @@ export class UserRepositoryImpl implements UserRepository {
       throw new RepositoryError({
         entity: 'User',
         operation: 'count',
-        error,
+        originalError: error,
       });
     }
   }
@@ -195,7 +195,7 @@ export class UserRepositoryImpl implements UserRepository {
       throw new RepositoryError({
         entity: 'User',
         operation: 'delete',
-        error,
+        originalError: error,
       });
     }
   }

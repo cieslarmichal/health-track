@@ -3,11 +3,11 @@ import { type EmailEventStatus } from './types/emailEventStatus.js';
 import { type EmailEventType } from './types/emailEventType.js';
 
 export interface EmailEventState {
-  id: string;
-  status: EmailEventStatus;
-  eventName: EmailEventType;
-  payload: BaseEmailPayload;
-  createdAt: Date;
+  readonly id: string;
+  readonly status: EmailEventStatus;
+  readonly eventName: EmailEventType;
+  readonly payload: BaseEmailPayload;
+  readonly createdAt: Date;
 }
 
 export class EmailEvent {

@@ -1,5 +1,6 @@
-import { UserRole } from '@common/contracts';
 import { type Static, Type } from '@sinclair/typebox';
+
+import { UserRole } from '@common/contracts';
 
 export const userDtoSchema = Type.Object({
   id: Type.String({ format: 'uuid' }),

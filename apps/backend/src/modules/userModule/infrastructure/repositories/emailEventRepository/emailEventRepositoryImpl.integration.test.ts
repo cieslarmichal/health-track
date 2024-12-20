@@ -1,10 +1,10 @@
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
-import { Generator } from '../../../../../../tests/generator.js';
-import { testSymbols } from '../../../../../../tests/symbols.js';
-import { TestContainer } from '../../../../../../tests/testContainer.js';
 import { coreSymbols } from '../../../../../core/symbols.js';
-import { type DatabaseClient } from '../../../../../libs/database/clients/databaseClient/databaseClient.js';
+import { type DatabaseClient } from '../../../../../libs/database/databaseClient.js';
+import { Generator } from '../../../../../tests/generator.js';
+import { testSymbols } from '../../../../../tests/symbols.js';
+import { TestContainer } from '../../../../../tests/testContainer.js';
 import { EmailEvent } from '../../../domain/entities/emailEvent/emailEvent.js';
 import { EmailEventStatus } from '../../../domain/entities/emailEvent/types/emailEventStatus.js';
 import { type EmailEventRepository } from '../../../domain/repositories/emailEventRepository/emailEventRepository.js';
@@ -74,7 +74,6 @@ describe('EmailEventRepositoryImpl', () => {
     it('returns all pending EmailEvents', async () => {
       const amountOfEmailEvents = Generator.number(10, 50);
 
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       const emailEvents = Array.from({ length: amountOfEmailEvents }).map(() => {
         return emailEventTestFactory.create({
           status: EmailEventStatus.pending,
@@ -120,7 +119,6 @@ describe('EmailEventRepositoryImpl', () => {
     it('deletes all processed EmailEvents', async () => {
       const amountOfEmailEvents = Generator.number(10, 50);
 
-      // eslint-disable-next-line @typescript-eslint/naming-convention
       const emailEvents = Array.from({ length: amountOfEmailEvents }).map(() => {
         return emailEventTestFactory.create({
           status: EmailEventStatus.processed,

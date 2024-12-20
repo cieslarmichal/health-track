@@ -1,6 +1,6 @@
 import { type ChangeUserPasswordAction, type ChangeUserPasswordActionPayload } from './changeUserPasswordAction.js';
-import { OperationNotValidError } from '../../../../../common/errors/operationNotValidError.js';
-import { type LoggerService } from '../../../../../libs/logger/services/loggerService/loggerService.js';
+import { OperationNotValidError } from '../../../../../libs/errors/operationNotValidError.js';
+import { type LoggerService } from '../../../../../libs/logger/loggerService.js';
 import { type TokenService } from '../../../../authModule/application/services/tokenService/tokenService.js';
 import { type BlacklistTokenRepository } from '../../../domain/repositories/blacklistTokenRepository/blacklistTokenRepository.js';
 import { type UserRepository } from '../../../domain/repositories/userRepository/userRepository.js';
@@ -76,6 +76,7 @@ export class ChangeUserPasswordActionImpl implements ChangeUserPasswordAction {
       throw new OperationNotValidError({
         reason: 'Invalid reset password token.',
         token: resetPasswordToken,
+        originalError: error,
       });
     }
 

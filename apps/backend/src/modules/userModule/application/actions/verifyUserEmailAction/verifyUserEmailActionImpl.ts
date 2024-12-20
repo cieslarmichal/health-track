@@ -1,6 +1,6 @@
 import { type VerifyUserEmailAction, type ExecutePayload } from './verifyUserEmailAction.js';
-import { OperationNotValidError } from '../../../../../common/errors/operationNotValidError.js';
-import { type LoggerService } from '../../../../../libs/logger/services/loggerService/loggerService.js';
+import { OperationNotValidError } from '../../../../../libs/errors/operationNotValidError.js';
+import { type LoggerService } from '../../../../../libs/logger/loggerService.js';
 import { type TokenService } from '../../../../authModule/application/services/tokenService/tokenService.js';
 import { type UserRepository } from '../../../domain/repositories/userRepository/userRepository.js';
 import { TokenType } from '../../../domain/types/tokenType.js';
@@ -23,6 +23,7 @@ export class VerifyUserEmailActionImpl implements VerifyUserEmailAction {
       throw new OperationNotValidError({
         reason: 'Invalid email verification token.',
         token: emailVerificationToken,
+        originalError: error,
       });
     }
 

@@ -1,4 +1,4 @@
-import { type Action } from '../../../../../common/types/commandHandler.js';
+import { type Action } from '../../../../../libs/types/action.js';
 
 export interface DeleteUserActionPayload {
   readonly userId: string;

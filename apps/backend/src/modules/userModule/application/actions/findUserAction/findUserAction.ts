@@ -1,4 +1,4 @@
-import { type Action } from '../../../../../common/types/queryHandler.js';
+import { type Action } from '../../../../../libs/types/action.js';
 import { type User } from '../../../domain/entities/user/user.js';
 
 export interface FindUserActionPayload {

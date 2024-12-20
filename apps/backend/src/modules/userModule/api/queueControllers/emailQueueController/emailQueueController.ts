@@ -1,11 +1,11 @@
 import { ExponentialBackoff, type IDisposable, handleAll, retry } from 'cockatiel';
 
-import { type QueueMessagePayload, type QueueChannel } from '../../../../../common/types/queue/queueChannel.js';
-import { type QueueController } from '../../../../../common/types/queue/queueController.js';
-import { type QueueHandler } from '../../../../../common/types/queue/queueHandler.js';
-import { QueuePath } from '../../../../../common/types/queue/queuePath.js';
-import { type LoggerService } from '../../../../../libs/logger/services/loggerService/loggerService.js';
-import { type SendGridService } from '../../../../../libs/sendGrid/services/sendGridService/sendGridService.js';
+import { type LoggerService } from '../../../../../libs/logger/loggerService.js';
+import { type SendGridService } from '../../../../../libs/sendGrid/sendGridService.js';
+import { type QueueChannel, type QueueMessagePayload } from '../../../../../libs/types/queueChannel.js';
+import { type QueueController } from '../../../../../libs/types/queueController.js';
+import { type QueueHandler } from '../../../../../libs/types/queueHandler.js';
+import { QueuePath } from '../../../../../libs/types/queuePath.js';
 import {
   ResetPasswordEmail,
   type ResetPasswordEmailTemplateData,
@@ -71,7 +71,7 @@ export class EmailQueueController implements QueueController {
     let retryListener: IDisposable;
 
     switch (emailEvent.getEmailEventName()) {
-      case EmailEventType.verifyEmail:
+      case EmailEventType.verifyEmail: {
         const verificationEmail = new VerificationEmail({
           recipient: emailEvent.getRecipientEmail(),
           templateData: emailEvent.getPayload() as unknown as VerificationEmailTemplateData,
@@ -123,8 +123,9 @@ export class EmailQueueController implements QueueController {
         });
 
         break;
+      }
 
-      case EmailEventType.resetPassword:
+      case EmailEventType.resetPassword: {
         const resetPasswordEmail = new ResetPasswordEmail({
           recipient: emailEvent.getRecipientEmail(),
           templateData: emailEvent.getPayload() as unknown as ResetPasswordEmailTemplateData,
@@ -176,6 +177,7 @@ export class EmailQueueController implements QueueController {
         });
 
         break;
+      }
     }
   }
 }

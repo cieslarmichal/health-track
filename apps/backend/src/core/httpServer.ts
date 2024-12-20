@@ -24,8 +24,8 @@ import { ResourceNotFoundError } from '../libs/errors/resourceNotFoundError.js';
 import { type HttpController } from '../libs/http/httpController.js';
 import { HttpStatusCode } from '../libs/http/httpStatusCode.js';
 import { type LoggerService } from '../libs/logger/loggerService.js';
-import { ForbiddenAccessError } from '../modules/authModule/application/errors/forbiddenAccessError.js';
-import { UnauthorizedAccessError } from '../modules/authModule/application/errors/unathorizedAccessError.js';
+import { ForbiddenAccessError } from '../libs/errors/forbiddenAccessError.js';
+import { UnauthorizedAccessError } from '../libs/errors/unathorizedAccessError.js';
 import { type UserHttpController } from '../modules/userModule/api/httpControllers/userHttpController/userHttpController.js';
 import { userSymbols } from '../modules/userModule/symbols.js';
 

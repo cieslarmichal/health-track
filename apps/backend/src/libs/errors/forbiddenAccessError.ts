@@ -1,8 +1,7 @@
-import { BaseError } from '../../../../common/errors/baseError.js';
+import { type BaseErrorContext, BaseError } from './baseError.js';
 
-interface Context {
+interface Context extends BaseErrorContext {
   readonly reason: string;
-  readonly [key: string]: unknown;
 }
 
 export class ForbiddenAccessError extends BaseError<Context> {

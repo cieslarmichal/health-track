@@ -24,6 +24,7 @@ const configSchema = Type.Object({
     password: Type.String({ minLength: 1 }),
     name: Type.String({ minLength: 1 }),
   }),
+  frontendUrl: Type.String({ minLength: 1 }),
   hashSaltRounds: Type.Number({
     minimum: 5,
     maximum: 12,

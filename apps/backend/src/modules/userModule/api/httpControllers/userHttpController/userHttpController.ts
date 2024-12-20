@@ -10,13 +10,7 @@ import {
   type DeleteUserPathParamsDto,
   deleteUserPathParamsDtoSchema,
 } from './schemas/deleteUserSchema.js';
-import { findMyUserResponseBodyDtoSchema } from './schemas/findMyUserSchema.js';
-import {
-  findUserPathParamsDtoSchema,
-  findUserResponseBodyDtoSchema,
-  type FindUserPathParamsDto,
-  type FindUserResponseBodyDto,
-} from './schemas/findUserSchema.js';
+import { type FindMyUserResponseBodyDto, findMyUserResponseBodyDtoSchema } from './schemas/findMyUserSchema.js';
 import {
   type LoginUserBodyDto,
   type LoginUserResponseBodyDto,
@@ -64,27 +58,28 @@ import {
   updateUserRequestBodyDtoSchema,
   updateUserResponseBodyDtoSchema,
 } from './schemas/updateUserSchema.js';
+import { type UserDto } from './schemas/userDto.js';
 import {
   verifyUserBodyDtoSchema,
   verifyUserResponseBodyDtoSchema,
   type VerifyUserBodyDto,
   type VerifyUserResponseBodyDto,
 } from './schemas/verifyUserSchema.js';
-import { OperationNotValidError } from '../../../../../common/errors/operationNotValidError.js';
-import { type HttpController } from '../../../../../common/types/http/httpController.js';
-import { HttpMethodName } from '../../../../../common/types/http/httpMethodName.js';
-import { type HttpRequest } from '../../../../../common/types/http/httpRequest.js';
+import { OperationNotValidError } from '../../../../../libs/errors/operationNotValidError.js';
+import { type HttpController } from '../../../../../libs/http/httpController.js';
+import { HttpMethodName } from '../../../../../libs/http/httpMethodName.js';
+import { type HttpRequest } from '../../../../../libs/http/httpRequest.js';
 import {
   type HttpCreatedResponse,
   type HttpOkResponse,
   type HttpNoContentResponse,
-} from '../../../../../common/types/http/httpResponse.js';
-import { HttpRoute } from '../../../../../common/types/http/httpRoute.js';
-import { HttpStatusCode } from '../../../../../common/types/http/httpStatusCode.js';
-import { SecurityMode } from '../../../../../common/types/http/securityMode.js';
+} from '../../../../../libs/http/httpResponse.js';
+import { HttpRoute } from '../../../../../libs/http/httpRoute.js';
+import { HttpStatusCode } from '../../../../../libs/http/httpStatusCode.js';
 import { type AccessControlService } from '../../../../authModule/application/services/accessControlService/accessControlService.js';
 import { type ChangeUserPasswordAction } from '../../../application/actions/changeUserPasswordAction/changeUserPasswordAction.js';
 import { type DeleteUserAction } from '../../../application/actions/deleteUserAction/deleteUserAction.js';
+import { type FindUserAction } from '../../../application/actions/findUserAction/findUserAction.js';
 import { type LoginUserAction } from '../../../application/actions/loginUserAction/loginUserAction.js';
 import { type LogoutUserAction } from '../../../application/actions/logoutUserAction/logoutUserAction.js';
 import { type RefreshUserTokensAction } from '../../../application/actions/refreshUserTokensAction/refreshUserTokensAction.js';
@@ -93,9 +88,7 @@ import { type SendResetPasswordEmailAction } from '../../../application/actions/
 import { type SendVerificationEmailAction } from '../../../application/actions/sendVerificationEmailAction/sendVerificationEmailAction.js';
 import { type UpdateUserAction } from '../../../application/actions/updateUserAction/updateUserAction.js';
 import { type VerifyUserEmailAction } from '../../../application/actions/verifyUserEmailAction/verifyUserEmailAction.js';
-import { type FindUserAction } from '../../../application/actions/findUserAction/findUserAction.js';
 import { type User } from '../../../domain/entities/user/user.js';
-import { type UserDto } from './schemas/userDto.js';
 
 export class UserHttpController implements HttpController {
   public readonly basePath = '/users';
@@ -189,24 +182,6 @@ export class UserHttpController implements HttpController {
       }),
       new HttpRoute({
         method: HttpMethodName.get,
-        path: ':userId',
-        handler: this.findUser.bind(this),
-        schema: {
-          request: {
-            pathParams: findUserPathParamsDtoSchema,
-          },
-          response: {
-            [HttpStatusCode.ok]: {
-              schema: findUserResponseBodyDtoSchema,
-              description: 'User found',
-            },
-          },
-        },
-        securityMode: SecurityMode.bearerToken,
-        description: 'Find user by id',
-      }),
-      new HttpRoute({
-        method: HttpMethodName.get,
         path: 'me',
         handler: this.findMyUser.bind(this),
         schema: {
@@ -218,7 +193,6 @@ export class UserHttpController implements HttpController {
             },
           },
         },
-        securityMode: SecurityMode.bearerToken,
         description: 'Find user by token',
       }),
       new HttpRoute({
@@ -236,7 +210,6 @@ export class UserHttpController implements HttpController {
             },
           },
         },
-        securityMode: SecurityMode.bearerToken,
         description: 'Delete user',
       }),
       new HttpRoute({
@@ -289,7 +262,6 @@ export class UserHttpController implements HttpController {
             },
           },
         },
-        securityMode: SecurityMode.bearerToken,
         description: 'Logout user',
       }),
       new HttpRoute({
@@ -308,7 +280,6 @@ export class UserHttpController implements HttpController {
             },
           },
         },
-        securityMode: SecurityMode.bearerToken,
         description: 'Update user',
       }),
       new HttpRoute({
@@ -394,6 +365,7 @@ export class UserHttpController implements HttpController {
       });
 
       userId = result.userId;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       userId = undefined;
     }
@@ -423,25 +395,7 @@ export class UserHttpController implements HttpController {
     };
   }
 
-  private async findUser(
-    request: HttpRequest<undefined, undefined, FindUserPathParamsDto>,
-  ): Promise<HttpOkResponse<FindUserResponseBodyDto>> {
-    const { userId } = request.pathParams;
-
-    await this.accessControlService.verifyBearerToken({
-      authorizationHeader: request.headers['authorization'],
-      expectedUserId: userId,
-    });
-
-    const { user } = await this.findUserAction.execute({ userId });
-
-    return {
-      statusCode: HttpStatusCode.ok,
-      body: this.mapUserToUserDto(user),
-    };
-  }
-
-  private async findMyUser(request: HttpRequest): Promise<HttpOkResponse<FindUserResponseBodyDto>> {
+  private async findMyUser(request: HttpRequest): Promise<HttpOkResponse<FindMyUserResponseBodyDto>> {
     const { userId } = await this.accessControlService.verifyBearerToken({
       authorizationHeader: request.headers['authorization'],
     });

@@ -5,8 +5,8 @@ import {
   type AccessControlService,
   type VerifyBearerTokenResult,
 } from './accessControlService.js';
-import { ForbiddenAccessError } from '../../errors/forbiddenAccessError.js';
-import { UnauthorizedAccessError } from '../../errors/unathorizedAccessError.js';
+import { ForbiddenAccessError } from '../../../../../libs/errors/forbiddenAccessError.js';
+import { UnauthorizedAccessError } from '../../../../../libs/errors/unathorizedAccessError.js';
 import { type TokenService } from '../tokenService/tokenService.js';
 
 export class AccessControlServiceImpl implements AccessControlService {
@@ -36,6 +36,7 @@ export class AccessControlServiceImpl implements AccessControlService {
     } catch (error) {
       throw new UnauthorizedAccessError({
         reason: 'Invalid access token.',
+        originalError: error,
       });
     }
 

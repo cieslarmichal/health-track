@@ -1,8 +1,8 @@
 import { type LoginUserAction, type LoginUserActionPayload, type LoginUserActionResult } from './loginUserAction.js';
 import { type Config } from '../../../../../core/config.js';
-import { type LoggerService } from '../../../../../libs/logger/services/loggerService/loggerService.js';
-import { ForbiddenAccessError } from '../../../../authModule/application/errors/forbiddenAccessError.js';
-import { UnauthorizedAccessError } from '../../../../authModule/application/errors/unathorizedAccessError.js';
+import { ForbiddenAccessError } from '../../../../../libs/errors/forbiddenAccessError.js';
+import { UnauthorizedAccessError } from '../../../../../libs/errors/unathorizedAccessError.js';
+import { type LoggerService } from '../../../../../libs/logger/loggerService.js';
 import { type TokenService } from '../../../../authModule/application/services/tokenService/tokenService.js';
 import { type UserRepository } from '../../../domain/repositories/userRepository/userRepository.js';
 import { TokenType } from '../../../domain/types/tokenType.js';

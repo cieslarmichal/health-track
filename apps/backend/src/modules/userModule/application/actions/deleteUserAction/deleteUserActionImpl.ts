@@ -1,6 +1,6 @@
 import { type DeleteUserAction, type DeleteUserActionPayload } from './deleteUserAction.js';
-import { ResourceNotFoundError } from '../../../../../common/errors/resourceNotFoundError.js';
-import { type LoggerService } from '../../../../../libs/logger/services/loggerService/loggerService.js';
+import { ResourceNotFoundError } from '../../../../../libs/errors/resourceNotFoundError.js';
+import { type LoggerService } from '../../../../../libs/logger/loggerService.js';
 import { type UserRepository } from '../../../domain/repositories/userRepository/userRepository.js';
 
 export class DeleteUserActionImpl implements DeleteUserAction {

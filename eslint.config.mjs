@@ -164,7 +164,7 @@ export default [
           pathGroupsExcludedImportTypes: ['builtin'],
           pathGroups: [
             {
-              pattern: '@libs/**',
+              pattern: '@common/**',
               group: 'internal',
             },
           ],

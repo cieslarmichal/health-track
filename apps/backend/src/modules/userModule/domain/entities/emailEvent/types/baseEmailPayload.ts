@@ -1,5 +1,5 @@
 export interface BaseEmailPayload {
-  recipientEmail: string;
-  name: string;
-  [key: string]: unknown;
+  readonly recipientEmail: string;
+  readonly name: string;
+  readonly [key: string]: unknown;
 }

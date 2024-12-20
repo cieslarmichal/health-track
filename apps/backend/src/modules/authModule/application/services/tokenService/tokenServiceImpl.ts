@@ -1,5 +1,3 @@
-/* eslint-disable import/no-named-as-default-member */
-
 import jwt from 'jsonwebtoken';
 
 import {
@@ -10,7 +8,7 @@ import {
   type DecodeTokenResult,
 } from './tokenService.js';
 import { type Config } from '../../../../../core/config.js';
-import { UnauthorizedAccessError } from '../../errors/unathorizedAccessError.js';
+import { UnauthorizedAccessError } from '../../../../../libs/errors/unathorizedAccessError.js';
 
 export class TokenServiceImpl implements TokenService {
   public constructor(private readonly config: Config) {}

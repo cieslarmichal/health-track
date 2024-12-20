@@ -1,7 +1,7 @@
 import { type BlacklistTokenMapper } from './blacklistTokenMapper/blacklistTokenMapper.js';
-import { RepositoryError } from '../../../../../common/errors/repositoryError.js';
-import { type DatabaseClient } from '../../../../../libs/database/clients/databaseClient/databaseClient.js';
-import { type UuidService } from '../../../../../libs/uuid/services/uuidService/uuidService.js';
+import { type DatabaseClient } from '../../../../../libs/database/databaseClient.js';
+import { RepositoryError } from '../../../../../libs/errors/repositoryError.js';
+import { type UuidService } from '../../../../../libs/uuid/uuidService.js';
 import { type BlacklistToken } from '../../../domain/entities/blacklistToken/blacklistToken.js';
 import {
   type BlacklistTokenRepository,
@@ -36,7 +36,7 @@ export class BlacklistTokenRepositoryImpl implements BlacklistTokenRepository {
       throw new RepositoryError({
         entity: 'BlacklistToken',
         operation: 'create',
-        error,
+        originalError: error,
       });
     }
 
@@ -59,7 +59,7 @@ export class BlacklistTokenRepositoryImpl implements BlacklistTokenRepository {
       throw new RepositoryError({
         entity: 'BlacklistToken',
         operation: 'find',
-        error,
+        originalError: error,
       });
     }
 

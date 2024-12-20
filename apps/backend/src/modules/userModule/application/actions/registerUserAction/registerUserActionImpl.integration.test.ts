@@ -1,15 +1,13 @@
+import { UserRole } from '@common/contracts';
 import { beforeEach, afterEach, expect, it, describe } from 'vitest';
 
-import { BookshelfType, UserRole } from '@common/contracts';
-
 import { type RegisterUserAction } from './registerUserAction.js';
-import { testSymbols } from '../../../../../../tests/symbols.js';
-import { TestContainer } from '../../../../../../tests/testContainer.js';
-import { OperationNotValidError } from '../../../../../common/errors/operationNotValidError.js';
-import { ResourceAlreadyExistsError } from '../../../../../common/errors/resourceAlreadyExistsError.js';
 import { coreSymbols } from '../../../../../core/symbols.js';
-import { type DatabaseClient } from '../../../../../libs/database/clients/databaseClient/databaseClient.js';
-import { type BookshelfTestUtils } from '../../../../bookshelfModule/tests/utils/bookshelfTestUtils/bookshelfTestUtils.js';
+import { type DatabaseClient } from '../../../../../libs/database/databaseClient.js';
+import { OperationNotValidError } from '../../../../../libs/errors/operationNotValidError.js';
+import { ResourceAlreadyExistsError } from '../../../../../libs/errors/resourceAlreadyExistsError.js';
+import { testSymbols } from '../../../../../tests/symbols.js';
+import { TestContainer } from '../../../../../tests/testContainer.js';
 import { symbols } from '../../../symbols.js';
 import { UserTestFactory } from '../../../tests/factories/userTestFactory/userTestFactory.js';
 import { type UserTestUtils } from '../../../tests/utils/userTestUtils/userTestUtils.js';
@@ -20,8 +18,6 @@ describe('RegisterUserAction', () => {
   let databaseClient: DatabaseClient;
 
   let userTestUtils: UserTestUtils;
-
-  let bookshelfTestUtils: BookshelfTestUtils;
 
   const userTestFactory = new UserTestFactory();
 
@@ -34,17 +30,11 @@ describe('RegisterUserAction', () => {
 
     userTestUtils = container.get<UserTestUtils>(testSymbols.userTestUtils);
 
-    bookshelfTestUtils = container.get<BookshelfTestUtils>(testSymbols.bookshelfTestUtils);
-
     await userTestUtils.truncate();
-
-    await bookshelfTestUtils.truncate();
   });
 
   afterEach(async () => {
     await userTestUtils.truncate();
-
-    await bookshelfTestUtils.truncate();
 
     await databaseClient.destroy();
   });
@@ -67,18 +57,6 @@ describe('RegisterUserAction', () => {
     expect(foundUser?.email).toEqual(user.getEmail());
 
     expect(foundUser?.role).toEqual(UserRole.user);
-
-    const bookshelves = await bookshelfTestUtils.findByUserId({ userId: createdUser.getId() });
-
-    expect(bookshelves).toHaveLength(2);
-
-    const archiveBookshelf = bookshelves.find((bookshelf) => bookshelf.type === BookshelfType.archive);
-
-    expect(archiveBookshelf?.name).toEqual('Archiwum');
-
-    const borrowingBookshelf = bookshelves.find((bookshelf) => bookshelf.type === BookshelfType.borrowing);
-
-    expect(borrowingBookshelf?.name).toEqual('Wypożyczalnia');
   });
 
   it('throws an error when a User with the same email already exists', async () => {

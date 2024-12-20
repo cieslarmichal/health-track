@@ -1,13 +1,12 @@
-import { BookshelfType, UserRole } from '@common/contracts';
+import { UserRole } from '@common/contracts';
 
 import {
   type RegisterUserAction,
   type RegisterUserActionPayload,
   type RegisterUserActionResult,
 } from './registerUserAction.js';
-import { ResourceAlreadyExistsError } from '../../../../../common/errors/resourceAlreadyExistsError.js';
-import { type LoggerService } from '../../../../../libs/logger/services/loggerService/loggerService.js';
-import { type CreateBookshelfAction } from '../../../../bookshelfModule/application/commandHandlers/createBookshelfAction/createBookshelfAction.js';
+import { ResourceAlreadyExistsError } from '../../../../../libs/errors/resourceAlreadyExistsError.js';
+import { type LoggerService } from '../../../../../libs/logger/loggerService.js';
 import { type UserRepository } from '../../../domain/repositories/userRepository/userRepository.js';
 import { type HashService } from '../../services/hashService/hashService.js';
 import { type PasswordValidationService } from '../../services/passwordValidationService/passwordValidationService.js';
@@ -63,27 +62,6 @@ export class RegisterUserActionImpl implements RegisterUserAction {
     });
 
     await this.sendVerificationEmailAction.execute({ email });
-
-    // TODO: add transaction
-
-    const { bookshelf: archiveBookshelf } = await this.createBookshelfAction.execute({
-      userId: user.getId(),
-      name: 'Archiwum',
-      type: BookshelfType.archive,
-    });
-
-    const { bookshelf: borrowingBookshelf } = await this.createBookshelfAction.execute({
-      userId: user.getId(),
-      name: 'Wypożyczalnia',
-      type: BookshelfType.borrowing,
-    });
-
-    this.loggerService.debug({
-      message: `Created user's bookshelves.`,
-      userId: user.getId(),
-      borrowingBookshelfId: borrowingBookshelf.getId(),
-      archiveBookshelfId: archiveBookshelf.getId(),
-    });
 
     return { user };
   }

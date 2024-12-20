@@ -3,6 +3,7 @@
     "username": "postgres",
     "password": "postgres"
   },
+  "frontendUrl": "https://health-track.com",
   "token": {
     "secret": "12321313423565365654546654121890008"
   }

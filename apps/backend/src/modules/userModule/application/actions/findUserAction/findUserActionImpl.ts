@@ -1,5 +1,5 @@
 import { type FindUserAction, type FindUserActionPayload, type FindUserActionResult } from './findUserAction.js';
-import { ResourceNotFoundError } from '../../../../../common/errors/resourceNotFoundError.js';
+import { ResourceNotFoundError } from '../../../../../libs/errors/resourceNotFoundError.js';
 import { type UserRepository } from '../../../domain/repositories/userRepository/userRepository.js';
 
 export class FindUserActionImpl implements FindUserAction {

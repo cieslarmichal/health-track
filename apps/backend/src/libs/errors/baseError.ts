@@ -1,5 +1,5 @@
 export interface BaseErrorContext {
-  readonly originalError?: Error;
+  readonly originalError?: unknown;
   readonly [key: string]: unknown;
 }
 

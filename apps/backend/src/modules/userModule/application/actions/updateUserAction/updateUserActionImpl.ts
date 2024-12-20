@@ -3,8 +3,8 @@ import {
   type UpdateUserAction,
   type UpdateUserActionPayload,
 } from './updateUserAction.js';
-import { OperationNotValidError } from '../../../../../common/errors/operationNotValidError.js';
-import { type LoggerService } from '../../../../../libs/logger/services/loggerService/loggerService.js';
+import { OperationNotValidError } from '../../../../../libs/errors/operationNotValidError.js';
+import { type LoggerService } from '../../../../../libs/logger/loggerService.js';
 import { type UserRepository } from '../../../domain/repositories/userRepository/userRepository.js';
 
 export class UpdateUserActionImpl implements UpdateUserAction {

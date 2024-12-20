@@ -6,7 +6,6 @@ export const symbols = {
   userRepository: Symbol('userRepository'),
   registerUserAction: Symbol('registerUserAction'),
   findUserAction: Symbol('findUserAction'),
-  findUsersAction: Symbol('findUsersAction'),
   loginUserAction: Symbol('loginUserAction'),
   refreshUserTokensAction: Symbol('refreshUserTokensAction'),
   logoutUserAction: Symbol('logoutUserAction'),
@@ -29,7 +28,7 @@ export const symbols = {
 
 export const userSymbols = {
   userHttpController: symbols.userHttpController,
-  userRepository: symbols.userRepository,
   emailQueueController: symbols.emailQueueController,
   hashService: symbols.hashService,
+  emailMessageBus: symbols.emailMessageBus,
 };

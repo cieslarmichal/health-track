@@ -11,7 +11,7 @@ export class UserMapperImpl implements UserMapper {
       email,
       password,
       name,
-      isEmailVerified: isEmailVerified ? true : false, // sqlite returns 0 or 1
+      isEmailVerified,
       role,
     });
   }

@@ -5,9 +5,9 @@ import { type FastifyRequest } from 'fastify';
 
 import type * as contracts from '@common/contracts';
 
-import { InputNotValidError } from '../../../../../../common/errors/inputNotValidError.js';
-import { type TypeExtends } from '../../../../../../common/types/schemaExtends.js';
 import { userDtoSchema } from './userDto.js';
+import { InputNotValidError } from '../../../../../../libs/errors/inputNotValidError.js';
+import { type TypeExtends } from '../../../../../../libs/types/schemaExtends.js';
 
 export const registerUserRequestBodyDtoSchema = Type.Object({
   email: Type.String({
