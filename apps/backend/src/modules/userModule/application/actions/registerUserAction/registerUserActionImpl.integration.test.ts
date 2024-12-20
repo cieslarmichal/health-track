@@ -1,5 +1,6 @@
-import { UserRole } from '@common/contracts';
 import { beforeEach, afterEach, expect, it, describe } from 'vitest';
+
+import { UserRole } from '@common/contracts';
 
 import { type RegisterUserAction } from './registerUserAction.js';
 import { coreSymbols } from '../../../../../core/symbols.js';

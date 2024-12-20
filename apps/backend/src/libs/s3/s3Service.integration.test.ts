@@ -3,10 +3,10 @@ import { createReadStream } from 'node:fs';
 import path from 'path';
 import { expect, describe, it, beforeEach, afterEach } from 'vitest';
 
-import { AwsRegion } from '../types/awsRegion.js';
 import { S3ClientFactory } from './s3ClientFactory.js';
 import { S3Service } from './s3Service.js';
 import { S3TestUtils } from '../tests/s3TestUtils.js';
+import { AwsRegion } from '../types/awsRegion.js';
 
 describe('S3Service', () => {
   let s3Service: S3Service;
