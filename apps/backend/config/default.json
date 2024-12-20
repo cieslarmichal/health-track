@@ -14,6 +14,10 @@
   },
   "hashSaltRounds": 10,
   "logLevel": "debug",
+  "sendGrid": {
+    "apiKey": null,
+    "senderEmail": "contact@healthtrack.com"
+  },
   "server": {
     "host": "0.0.0.0",
     "port": 5000

@@ -8,6 +8,9 @@
     "password": "DATABASE_PASSWORD"
   },
   "logLevel": "LOG_LEVEL",
+  "sendGrid": {
+    "apiKey": "SENDGRID_API_KEY"
+  },
   "token": {
     "secret": "TOKEN_SECRET"
   }

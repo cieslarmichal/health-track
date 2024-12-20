@@ -1,4 +1,4 @@
-import { Application } from './application.js';
+import { Application } from './core/application.js';
 import { BaseError } from './libs/errors/baseError.js';
 
 export const finalErrorHandler = async (error: unknown): Promise<void> => {
@@ -19,7 +19,7 @@ export const finalErrorHandler = async (error: unknown): Promise<void> => {
     }),
   );
 
-  await application?.stop();
+  await Application.stop();
 
   process.exit(1);
 };
@@ -32,12 +32,8 @@ process.on('SIGINT', finalErrorHandler);
 
 process.on('SIGTERM', finalErrorHandler);
 
-let application: Application | undefined;
-
 try {
-  application = new Application();
-
-  await application.start();
+  await Application.start();
 } catch (error) {
   await finalErrorHandler(error);
 }
