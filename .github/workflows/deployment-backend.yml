@@ -9,6 +9,7 @@ jobs:
   deploy-backend:
     name: Deployment
     runs-on: ubuntu-latest
+    if: false
     steps:
       - uses: actions/checkout@v3
       - uses: superfly/flyctl-actions/setup-flyctl@master
