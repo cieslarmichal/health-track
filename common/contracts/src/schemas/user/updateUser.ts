@@ -8,4 +8,4 @@ export interface UpdateUserRequestBody {
   readonly name: string;
 }
 
-export interface UpdateUserResponseBody extends User {}
+export type UpdateUserResponseBody = User;

@@ -6,4 +6,4 @@ export interface RegisterUserRequestBody {
   readonly name: string;
 }
 
-export interface RegisterUserResponseBody extends User {}
+export type RegisterUserResponseBody = User;
