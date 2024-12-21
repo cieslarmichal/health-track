@@ -1,7 +1,7 @@
 import { type S3Client } from '@aws-sdk/client-s3';
 
 import { ApplicationHttpController } from './api/httpControllers/applicationHttpController/applicationHttpController.js';
-import { ConfigFactory, type Config } from './config.js';
+import { createConfig, type Config } from './config.js';
 import { HttpServer } from './httpServer.js';
 import { coreSymbols, symbols } from './symbols.js';
 import { type DatabaseClient } from '../libs/database/databaseClient.js';
@@ -31,7 +31,7 @@ export class Application {
 
     const container = DependencyInjectionContainerFactory.create({ modules });
 
-    const config = ConfigFactory.create();
+    const config = createConfig();
 
     container.bind<LoggerService>(symbols.loggerService, () =>
       LoggerServiceFactory.create({ logLevel: config.logLevel }),
