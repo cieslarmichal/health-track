@@ -16,7 +16,7 @@
   "logLevel": "debug",
   "sendGrid": {
     "apiKey": null,
-    "senderEmail": "contact@healthtrack.com"
+    "senderEmail": "contact@health-track.com"
   },
   "server": {
     "host": "0.0.0.0",
