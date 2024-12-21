@@ -11,6 +11,7 @@
     "password": null,
     "name": "postgres"
   },
+  "frontendUrl": "https://health-track.com",
   "hashSaltRounds": 10,
   "logLevel": "debug",
   "sendGrid": {

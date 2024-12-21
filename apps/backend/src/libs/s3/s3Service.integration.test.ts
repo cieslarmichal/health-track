@@ -13,7 +13,7 @@ describe('S3Service', () => {
 
   let s3TestUtils: S3TestUtils;
 
-  const resourcesDirectory = path.resolve(__dirname, '../../../resources');
+  const resourcesDirectory = path.resolve(__dirname, '../../../../../resources');
 
   const sampleFileName = 'sample_image.jpg';
 
