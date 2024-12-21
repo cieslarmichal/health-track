@@ -3,7 +3,7 @@
 import { type Static, Type } from '@sinclair/typebox';
 import { type FastifyRequest } from 'fastify';
 
-import type * as contracts from '@common/contracts';
+import type { RegisterUserRequestBody, RegisterUserResponseBody } from '@common/contracts';
 
 import { emailSchema, passwordSchema, userDtoSchema, userNameSchema } from './userDto.js';
 import { InputNotValidError } from '../../../../../../libs/errors/inputNotValidError.js';
@@ -17,14 +17,14 @@ export const registerUserRequestBodyDtoSchema = Type.Object({
 
 export type RegisterUserRequestBodyDto = TypeExtends<
   Static<typeof registerUserRequestBodyDtoSchema>,
-  contracts.RegisterUserRequestBody
+  RegisterUserRequestBody
 >;
 
 export const registerUserResponseBodyDtoSchema = userDtoSchema;
 
 export type RegisterUserResponseBodyDto = TypeExtends<
   Static<typeof registerUserResponseBodyDtoSchema>,
-  contracts.RegisterUserResponseBody
+  RegisterUserResponseBody
 >;
 
 export const registerUserBodyPreValidationHook = (

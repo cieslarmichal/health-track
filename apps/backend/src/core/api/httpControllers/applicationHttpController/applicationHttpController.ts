@@ -1,5 +1,6 @@
 import { checkHealthResponseBodySchema, type CheckHealthResponseBody } from './schemas/checkHealthSchema.js';
 import { type DatabaseClient } from '../../../../libs/database/databaseClient.js';
+import { serializeError } from '../../../../libs/errors/serializeError.js';
 import { type HttpController } from '../../../../libs/http/httpController.js';
 import { HttpMethodName } from '../../../../libs/http/httpMethodName.js';
 import { type HttpOkResponse } from '../../../../libs/http/httpResponse.js';
@@ -60,7 +61,10 @@ export class ApplicationHttpController implements HttpController {
 
       return true;
     } catch (error) {
-      this.logger.error({ message: 'Database health check failed', error });
+      this.logger.error({
+        message: 'Database health check failed',
+        error: serializeError(error),
+      });
 
       return false;
     }

@@ -38,7 +38,10 @@ export interface GetBlobsPayload {
 }
 
 export interface GetBlobsResult {
-  readonly blobs: { name: string; contentType: string }[];
+  readonly blobs: {
+    name: string;
+    contentType: string;
+  }[];
 }
 
 export interface BlobExistsPayload {
@@ -136,7 +139,10 @@ export class S3Service {
           }),
         );
 
-        return { name, contentType: metadata.ContentType as string };
+        return {
+          name,
+          contentType: metadata.ContentType as string,
+        };
       }),
     );
 

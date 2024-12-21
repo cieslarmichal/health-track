@@ -11,7 +11,13 @@ export interface HttpRouteSchema {
     queryParams?: TSchema;
     pathParams?: TSchema;
   };
-  readonly response: Record<number, { schema: TSchema; description: string }>;
+  readonly response: Record<
+    number,
+    {
+      schema: TSchema;
+      description: string;
+    }
+  >;
 }
 
 export interface HttpRouteDraft {

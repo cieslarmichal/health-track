@@ -1,19 +1,44 @@
 import globals from 'globals';
 
 import pluginJs from '@eslint/js';
-
+import { FlatCompat } from '@eslint/eslintrc';
 import tsEslint from 'typescript-eslint';
 
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
 import eslintPluginImport from 'eslint-plugin-import';
 
+import stylistic from '@stylistic/eslint-plugin';
+
+const compat = new FlatCompat();
+
 export default [
-  { files: ['**/*.ts'] },
-  eslintPluginImport.flatConfigs.recommended,
+  {
+    files: ['**/*.ts'],
+  },
   {
     ignores: ['**/dist/**', '**/node_modules/**', '**/*.mjs'],
   },
+  {
+    languageOptions: { globals: { ...globals.node } },
+  },
+  {
+    plugins: {
+      '@stylistic': stylistic,
+    },
+  },
+  ...compat.config({
+    env: { node: true },
+    parser: '@typescript-eslint/parser',
+    parserOptions: {
+      sourceType: 'module',
+    },
+    settings: {
+      'import/resolver': {
+        typescript: {},
+      },
+    },
+  }),
   {
     rules: {
       'padding-line-between-statements': [
@@ -182,7 +207,7 @@ export default [
       'no-unused-vars': 'error',
       '@typescript-eslint/no-unused-vars': 2,
       'import/export': 0,
-      'object-property-newline': [
+      '@stylistic/object-property-newline': [
         'error',
         {
           allowAllPropertiesOnSameLine: false,
@@ -197,7 +222,7 @@ export default [
       'object-shorthand': ['error'],
     },
   },
-  { languageOptions: { globals: { ...globals.node } } },
+  eslintPluginImport.flatConfigs.recommended,
   pluginJs.configs.recommended,
   ...tsEslint.configs.recommended,
   eslintPluginPrettierRecommended,

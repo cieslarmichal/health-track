@@ -2,8 +2,7 @@
   "aws": {
     "accessKeyId": null,
     "secretAccessKey": null,
-    "region": "eu-central-1",
-    "endpoint": null
+    "region": "eu-central-1"
   },
   "database": {
     "host": "localhost",
@@ -29,6 +28,12 @@
     },
     "refresh": {
       "expiresIn": 604800
+    },
+    "emailVerification": {
+      "expiresIn": 86400
+    },
+    "resetPassword": {
+      "expiresIn": 3600
     }
   }
 }

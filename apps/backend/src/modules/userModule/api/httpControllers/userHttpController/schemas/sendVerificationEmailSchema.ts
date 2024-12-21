@@ -1,6 +1,6 @@
 import { type Static, Type } from '@sinclair/typebox';
 
-import type * as contracts from '@common/contracts';
+import type { SendVerificationEmailRequestBody } from '@common/contracts';
 
 import { emailSchema } from './userDto.js';
 import { type TypeExtends } from '../../../../../../libs/types/schemaExtends.js';
@@ -11,7 +11,7 @@ export const sendVerificationEmailBodyDtoSchema = Type.Object({
 
 export type SendVerificationEmailBodyDto = TypeExtends<
   Static<typeof sendVerificationEmailBodyDtoSchema>,
-  contracts.SendVerificationEmailRequestBody
+  SendVerificationEmailRequestBody
 >;
 
 export const sendVerificationEmailResponseBodyDtoSchema = Type.Null();

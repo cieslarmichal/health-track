@@ -7,7 +7,6 @@ import { LogLevel } from '../libs/logger/logLevel.js';
 import { AwsRegion } from '../libs/types/awsRegion.js';
 
 const configSchema = Type.Object({
-  appName: Type.String({ minLength: 1 }),
   aws: Type.Object({
     accessKeyId: Type.String({ minLength: 1 }),
     secretAccessKey: Type.String({ minLength: 1 }),

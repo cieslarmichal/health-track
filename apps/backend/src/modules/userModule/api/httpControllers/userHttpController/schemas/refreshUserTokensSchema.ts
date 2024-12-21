@@ -1,6 +1,6 @@
 import { type Static, Type } from '@sinclair/typebox';
 
-import type * as contracts from '@common/contracts';
+import type { RefreshUserTokensRequestBody, RefreshUserTokensResponseBody } from '@common/contracts';
 
 import { type TypeExtends } from '../../../../../../libs/types/schemaExtends.js';
 
@@ -10,7 +10,7 @@ export const refreshUserTokensBodyDtoSchema = Type.Object({
 
 export type RefreshUserTokensBodyDto = TypeExtends<
   Static<typeof refreshUserTokensBodyDtoSchema>,
-  contracts.RefreshUserTokensRequestBody
+  RefreshUserTokensRequestBody
 >;
 
 export const refreshUserTokensResponseBodyDtoSchema = Type.Object({
@@ -21,5 +21,5 @@ export const refreshUserTokensResponseBodyDtoSchema = Type.Object({
 
 export type RefreshUserTokensResponseBodyDto = TypeExtends<
   Static<typeof refreshUserTokensResponseBodyDtoSchema>,
-  contracts.RefreshUserTokensResponseBody
+  RefreshUserTokensResponseBody
 >;
